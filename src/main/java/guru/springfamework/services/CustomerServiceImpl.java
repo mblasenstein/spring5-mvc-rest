@@ -38,7 +38,8 @@ public class CustomerServiceImpl implements CustomerService {
         if (customer == null) {
             return null;
         }
-        customer.setCustomerUrl(path);
-        return customerMapper.customerToCustomerDTO(customer);
+        CustomerDTO dto = customerMapper.customerToCustomerDTO(customer);
+        dto.setCustomerUrl(path);
+        return dto;
     }
 }

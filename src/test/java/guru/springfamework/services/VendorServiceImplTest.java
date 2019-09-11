@@ -82,7 +82,7 @@ public class VendorServiceImplTest {
         when(vendorRepository.findById(anyLong())).thenReturn(Optional.of(vendor));
         when(vendorRepository.save(any(Vendor.class))).thenReturn(vendor);
 
-        assertNotNull( vendorService.updateVendorById(any(VendorDTO.class), anyLong()));
+        assertNotNull( vendorService.updateVendor(any(VendorDTO.class), anyLong()));
 
         verify(vendorRepository, times(1)).findById(anyLong());
         verify(vendorRepository, times(1)).save(any(Vendor.class));
@@ -95,7 +95,7 @@ public class VendorServiceImplTest {
         when(vendorRepository.findById(anyLong())).thenReturn(Optional.of(vendor));
         when(vendorRepository.save(any(Vendor.class))).thenReturn(vendor);
 
-        assertNotNull( vendorService.updateVendorById(any(VendorDTO.class), anyLong()));
+        assertNotNull( vendorService.updateVendor(any(VendorDTO.class), anyLong()));
 
         verify(vendorRepository, times(1)).findById(anyLong());
         verify(vendorRepository, times(1)).save(any(Vendor.class));

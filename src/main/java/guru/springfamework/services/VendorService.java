@@ -12,7 +12,7 @@ public interface VendorService {
 
     VendorDTO getVendorById(Long id);
 
-    VendorDTO updateVendorById(VendorDTO vendorDTO, Long id);
+    VendorDTO updateVendor(VendorDTO vendorDTO, Long id);
 
-    VendorDTO replaceVendorById(VendorDTO vendorDTO, Long id);
+    VendorDTO replaceVendor(VendorDTO vendorDTO, Long id);
 }

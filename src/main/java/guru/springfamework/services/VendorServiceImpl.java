@@ -38,12 +38,12 @@ public class VendorServiceImpl implements VendorService {
     }
 
     @Override
-    public VendorDTO updateVendorById(VendorDTO vendorDTO, Long id) {
+    public VendorDTO updateVendor(VendorDTO vendorDTO, Long id) {
         return null;
     }
 
     @Override
-    public VendorDTO replaceVendorById(VendorDTO vendorDTO, Long id) {
+    public VendorDTO replaceVendor(VendorDTO vendorDTO, Long id) {
         return null;
     }
 }

@@ -44,14 +44,14 @@ public class VendorController {
 
     @PatchMapping("{id}")
     @ResponseStatus(HttpStatus.OK)
-    public VendorDTO updateVendorById(@PathVariable Long id) {
+    public VendorDTO updateVendor(@PathVariable Long id) {
         return new VendorDTO();
 
     }
 
     @PutMapping("{id}")
     @ResponseStatus(HttpStatus.OK)
-    public VendorDTO replaceVendorById(@PathVariable Long id) {
+    public VendorDTO replaceVendor(@PathVariable Long id) {
         return new VendorDTO();
 
     }

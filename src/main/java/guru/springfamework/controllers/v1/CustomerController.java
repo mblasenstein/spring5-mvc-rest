@@ -30,7 +30,7 @@ public class CustomerController {
     @GetMapping
     public ResponseEntity<CustomerListDTO> getAllCustomers(HttpServletRequest request) {
         String path = (String) request.getAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE);
-        path = path.replace("/+$", "");
+        path = path.replaceAll("/+$", "");
         return new ResponseEntity<CustomerListDTO>(new CustomerListDTO(customerService.getAllCustomers(path)), HttpStatus.OK);
     }
 

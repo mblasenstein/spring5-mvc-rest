@@ -20,14 +20,13 @@ public class VendorController {
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public VendorListDTO getAllVendors() {
-        return new VendorListDTO();
+        return new VendorListDTO(vendorService.getAllVendors());
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public VendorDTO createNewVendor(VendorDTO vendorDTO) {
-        return new VendorDTO();
-
+        return vendorService.createNewVendor(vendorDTO);
     }
 
     @DeleteMapping("{id}")

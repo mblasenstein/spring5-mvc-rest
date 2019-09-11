@@ -47,7 +47,7 @@ public class VendorControllerTest {
     @Test
     public void getAllVendors() throws Exception {
 
-        when(vendorService.getAllVendors()).thenReturn(new VendorListDTO(getVendorDTOFixtures()));
+        when(vendorService.getAllVendors()).thenReturn(getVendorDTOFixtures());
 
         mockMvc.perform(get(VendorController.BASE_URL)
                 .contentType(MediaType.APPLICATION_JSON))

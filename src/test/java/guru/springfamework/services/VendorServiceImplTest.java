@@ -36,9 +36,9 @@ public class VendorServiceImplTest {
         
         when(vendorRepository.findAll()).thenReturn(getVendorFixtures());
         
-        VendorListDTO vendorListDTO = vendorService.getAllVendors();
+        List<VendorDTO> vendorDTOs = vendorService.getAllVendors();
         
-        assertEquals(3, vendorListDTO.getVendors().size());
+        assertEquals(3, vendorDTOs.size());
         
         verify(vendorRepository, times(1)).findAll();
     }
@@ -48,7 +48,7 @@ public class VendorServiceImplTest {
 
         when(vendorRepository.save(any(Vendor.class))).thenReturn(new Vendor());
 
-        VendorDTO vendorDTO = vendorService.createNewVendor(any(VendorDTO.class));
+        VendorDTO vendorDTO = vendorService.createNewVendor(new VendorDTO());
 
         assertNotNull(vendorDTO);
 
@@ -72,6 +72,8 @@ public class VendorServiceImplTest {
 
         when(vendorRepository.findById(id)).thenReturn(Optional.of(new Vendor()));
 
+        assertNotNull(vendorRepository.findById(id).get());
+
         verify(vendorRepository, times(1)).findById(id);
     }
 
@@ -82,7 +84,7 @@ public class VendorServiceImplTest {
         when(vendorRepository.findById(anyLong())).thenReturn(Optional.of(vendor));
         when(vendorRepository.save(any(Vendor.class))).thenReturn(vendor);
 
-        assertNotNull( vendorService.updateVendor(any(VendorDTO.class), anyLong()));
+        assertNotNull(vendorService.updateVendor(new VendorDTO(), 1L));
 
         verify(vendorRepository, times(1)).findById(anyLong());
         verify(vendorRepository, times(1)).save(any(Vendor.class));
@@ -95,7 +97,7 @@ public class VendorServiceImplTest {
         when(vendorRepository.findById(anyLong())).thenReturn(Optional.of(vendor));
         when(vendorRepository.save(any(Vendor.class))).thenReturn(vendor);
 
-        assertNotNull( vendorService.updateVendor(any(VendorDTO.class), anyLong()));
+        assertNotNull( vendorService.replaceVendor(new VendorDTO(), 1L));
 
         verify(vendorRepository, times(1)).findById(anyLong());
         verify(vendorRepository, times(1)).save(any(Vendor.class));

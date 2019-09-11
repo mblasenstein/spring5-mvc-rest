@@ -99,7 +99,6 @@ public class VendorServiceImplTest {
 
         assertNotNull( vendorService.replaceVendor(new VendorDTO(), 1L));
 
-        verify(vendorRepository, times(1)).findById(anyLong());
         verify(vendorRepository, times(1)).save(any(Vendor.class));
     }
     

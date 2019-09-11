@@ -8,6 +8,7 @@ import guru.springfamework.repositories.VendorRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -80,18 +81,14 @@ public class VendorServiceImpl implements VendorService {
     @Override
     public VendorDTO replaceVendor(VendorDTO vendorDTO, Long id) {
 
-        return vendorRepository.findById(id)
-                .map(vendor -> {
-                    vendor.setId(vendorDTO.getId());
-                    vendor.setFirstname(vendorDTO.getFirstname());
-                    vendor.setLastname(vendorDTO.getLastname());
-                    vendor.setVendorUrl(vendorDTO.getVendorUrl());
-                    vendorRepository.save(vendor);
-                    vendor.setVendorUrl(getVendorUrl(vendor.getId()));
-                    return vendor;
-                })
-                .map(mapper::vendorToVendorDTO)
-                .orElseThrow(ResourceNotFoundException::new);
+        Vendor replaced = mapper.vendorDtoToVendor(vendorDTO);
+        replaced.setId(id);
+
+        VendorDTO replacedDTO = mapper.vendorToVendorDTO(vendorRepository.save(replaced));
+
+        replacedDTO.setVendorUrl(getVendorUrl(replacedDTO.getId()));
+
+        return replacedDTO;
     }
 
     private String getVendorUrl(Long id) {

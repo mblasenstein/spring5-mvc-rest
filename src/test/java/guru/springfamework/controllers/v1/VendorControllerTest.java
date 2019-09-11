@@ -1,7 +1,6 @@
 package guru.springfamework.controllers.v1;
 
 import guru.springfamework.api.v1.model.VendorDTO;
-import guru.springfamework.api.v1.model.VendorListDTO;
 import guru.springfamework.controllers.RestResponseEntityExceptionHandler;
 import guru.springfamework.services.VendorService;
 import org.junit.Before;
@@ -69,11 +68,10 @@ public class VendorControllerTest {
 
         when(vendorService.createNewVendor(createdVendor)).thenReturn(returnedVendor);
 
-        mockMvc.perform(post(VendorController.BASE_URL + "/create")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(asJsonString(createdVendor)))
+        mockMvc.perform(post(VendorController.BASE_URL)
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(asJsonString(createdVendor)))
                 .andExpect(status().isCreated())
-                .andExpect(jsonPath("$", hasSize(1)))
                 .andExpect(jsonPath("$.firstname", equalTo(returnedVendor.getFirstname())))
                 .andExpect(jsonPath("$.lastname", equalTo(returnedVendor.getLastname())))
                 .andExpect(jsonPath("$.vendor_url", equalTo(VendorController.BASE_URL + "/1")));
@@ -82,7 +80,7 @@ public class VendorControllerTest {
     @Test
     public void deleteVendorById() throws Exception {
 
-        mockMvc.perform(delete("/api/v1/endor/delete/" + anyInt())
+        mockMvc.perform(delete("/api/v1/vendor/" + 1)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
 
@@ -104,7 +102,7 @@ public class VendorControllerTest {
         mockMvc.perform(get("/api/v1/vendor/" + id)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id", equalTo(vendor.getId())))
+                .andExpect(jsonPath("$.id", equalTo(Integer.parseInt(String.valueOf((vendor.getId()))))))
                 .andExpect(jsonPath("$.firstname", equalTo(vendor.getFirstname())))
                 .andExpect(jsonPath("$.lastname", equalTo(vendor.getLastname())))
                 .andExpect(jsonPath("$.vendor_url", equalTo(vendor.getVendorUrl())));
@@ -134,9 +132,9 @@ public class VendorControllerTest {
         when(vendorService.updateVendor(patchingVendor, id))
                 .thenReturn(patchedVendor);
 
-        mockMvc.perform(post("/api/v1/vendor/update/" + id)
+        mockMvc.perform(patch("/api/v1/vendor/" + id)
                 .contentType(MediaType.APPLICATION_JSON)
-                .contentType(asJsonString(patchingVendor)))
+                .content(asJsonString(patchingVendor)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.firstname", equalTo(vendorToPatch.getFirstname())))
                 .andExpect(jsonPath("$.lastname", equalTo(newLastname)))
@@ -152,7 +150,7 @@ public class VendorControllerTest {
         vendorToPut.setId(id);
         vendorToPut.setFirstname("Raymond");
         vendorToPut.setLastname("Holt");
-        vendorToPut.setVendorUrl(VendorController.BASE_URL + "/" + id);
+        vendorToPut.setVendorUrl(VendorController.BASE_URL + "/" + String.valueOf(id));
 
         VendorDTO replacedVendor = new VendorDTO();
         replacedVendor.setId(vendorToPut.getId());
@@ -160,12 +158,11 @@ public class VendorControllerTest {
         replacedVendor.setLastname(vendorToPut.getLastname());
         replacedVendor.setVendorUrl(vendorToPut.getVendorUrl());
 
-        when(vendorService.replaceVendor(vendorToPut, id))
-                .thenReturn(replacedVendor);
+        when(vendorService.replaceVendor(vendorToPut, id)).thenReturn(replacedVendor);
 
-        mockMvc.perform(post("/api/v1/vendor/replace/" + id)
+        mockMvc.perform(put("/api/v1/vendor/" + id)
                 .contentType(MediaType.APPLICATION_JSON)
-                .contentType(asJsonString(vendorToPut)))
+                .content(asJsonString(vendorToPut)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.firstname", equalTo(replacedVendor.getFirstname())))
                 .andExpect(jsonPath("$.lastname", equalTo(replacedVendor.getLastname())))
